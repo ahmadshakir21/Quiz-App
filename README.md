@@ -4,4 +4,4 @@
 
 ## Author
 
- Markup :  [Named Link](https://github.com/ahmadshakir21 "Named link title") and https://github.com/ahmadshakir21 or <http://example.com/>
+ Github : Ahmad Shakir (https://github.com/ahmadshakir21 "Ahmad") and https://github.com/ahmadshakir21>
