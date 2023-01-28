@@ -4,4 +4,4 @@
 
 ## Author
  
- [.] [ahmad shakir](https://github.com/ahmadshakir21 "ahmad shakir")
+ This is my github [ahmad shakir](https://github.com/ahmadshakir21 "ahmad shakir")
