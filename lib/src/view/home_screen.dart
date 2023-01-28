@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application/src/data/question_list.dart';
+import 'package:flutter_application/src/view/result_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -31,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(18),
         child: PageView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           controller: controller!,
           onPageChanged: (value) {
             setState(() {
@@ -64,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(questions[index].questions!,
                     style: const TextStyle(color: Colors.white, fontSize: 25)),
                 const SizedBox(
-                  height: 35,
+                  height: 50,
                 ),
                 for (int i = 0; i < questions[index].answers!.length; i++)
                   Container(
@@ -109,17 +111,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     OutlinedButton(
                         onPressed: isPressed
-                            ? () {
-                                controller!.nextPage(
-                                    duration: const Duration(milliseconds: 150),
-                                    curve: Curves.linear);
-                              }
+                            ? index + 1 == questions.length
+                                ? () {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          ResultScreen(score: score),
+                                    ));
+                                  }
+                                : () {
+                                    controller!.nextPage(
+                                        duration:
+                                            const Duration(milliseconds: 150),
+                                        curve: Curves.linear);
+                                    setState(() {
+                                      isPressed = false;
+                                    });
+                                  }
                             : null,
-                        //TODO: change this OutlineButton shape
-                        style: OutlinedButton.styleFrom(),
-                        child: const Text(
-                          "Next Question",
-                          style: TextStyle(color: Colors.white),
+                        style: OutlinedButton.styleFrom(
+                          shape: const StadiumBorder(),
+                          side: const BorderSide(
+                              color: Colors.orange, width: 1.5),
+                        ),
+                        child: Text(
+                          index + 1 == questions.length
+                              ? "See Result"
+                              : "Next Question",
+                          style: const TextStyle(color: Colors.white),
                         )),
                   ],
                 ),
