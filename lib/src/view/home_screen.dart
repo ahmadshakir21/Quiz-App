@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_application/src/constant/constant.dart';
 import 'package:flutter_application/src/data/question_list.dart';
 import 'package:flutter_application/src/view/result_screen.dart';
 
@@ -8,21 +10,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Color mainColor = const Color(0xFF252c4a);
-
-  Color secondColor = const Color(0xFF117eeb);
-
   PageController? controller = PageController(initialPage: 0);
-
   bool isPressed = false;
-
-  Color isTrue = Colors.green;
-
-  Color isWrong = Colors.red;
-
-  Color btnColor = const Color(0xFF117eeb);
-
+  int time = 0;
   int score = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer.periodic(
+        const Duration(seconds: 1),
+        (timer) => setState(() {
+              time++;
+            }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +48,28 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  child: Text(
-                    "Question ${index + 1} / ${questions.length}",
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w300,
-                        fontSize: 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Question ${index + 1} / ${questions.length}",
+                        style: TextStyle(
+                            color: textColor,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 25),
+                      ),
+                      Text(
+                        "${time}s",
+                        style: TextStyle(
+                            color: textColor,
+                            fontWeight: FontWeight.w300,
+                            fontSize: 25),
+                      ),
+                    ],
                   ),
                 ),
-                const Divider(
-                  color: Colors.white,
+                Divider(
+                  color: textColor,
                   height: 5,
                   thickness: 1,
                 ),
@@ -64,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20,
                 ),
                 Text(questions[index].questions!,
-                    style: const TextStyle(color: Colors.white, fontSize: 25)),
+                    style: TextStyle(color: textColor, fontSize: 25)),
                 const SizedBox(
                   height: 50,
                 ),
@@ -97,8 +110,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           : secondColor,
                       child: Text(
                         questions[index].answers!.keys.toList()[i],
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: mainColor,
                         ),
                       ),
                     ),
@@ -115,8 +128,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ? () {
                                     Navigator.of(context)
                                         .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          ResultScreen(score: score),
+                                      builder: (context) => ResultScreen(
+                                          score: score, time: time),
                                     ));
                                   }
                                 : () {
@@ -131,14 +144,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             : null,
                         style: OutlinedButton.styleFrom(
                           shape: const StadiumBorder(),
-                          side: const BorderSide(
-                              color: Colors.orange, width: 1.5),
+                          side: BorderSide(color: secondColor, width: 2),
                         ),
                         child: Text(
                           index + 1 == questions.length
                               ? "See Result"
                               : "Next Question",
-                          style: const TextStyle(color: Colors.white),
+                          style: TextStyle(color: textColor),
                         )),
                   ],
                 ),

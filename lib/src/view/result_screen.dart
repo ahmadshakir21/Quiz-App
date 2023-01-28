@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_application/src/constant/constant.dart';
 import 'package:flutter_application/src/view/home_screen.dart';
 
 class ResultScreen extends StatelessWidget {
   final int score;
-  ResultScreen({required this.score});
-  Color mainColor = const Color(0xFF252c4a);
-  Color secondColor = const Color(0xFF117eeb);
+  final int time;
+  ResultScreen({required this.score, required this.time});
+  // Color mainColor = const Color(0xFF252c4a);
+  // Color secondColor = const Color(0xFF117eeb);
 
   @override
   Widget build(BuildContext context) {
@@ -19,20 +19,20 @@ class ResultScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "Congratulations",
+              Text(
+                score >= 40 ? "Congratulations" : "You Failed! Try again",
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 40,
+                    color: textColor,
+                    fontSize: 38,
                     fontWeight: FontWeight.bold),
               ),
               const SizedBox(
                 height: 10,
               ),
-              const Text(
+              Text(
                 "Your Score is : ",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: textColor,
                     fontSize: 30,
                     fontWeight: FontWeight.w400),
               ),
@@ -41,10 +41,20 @@ class ResultScreen extends StatelessWidget {
               ),
               Text(
                 score.toString(),
-                style: const TextStyle(
-                    color: Colors.orange,
+                style: TextStyle(
+                    color: secondColor,
                     fontSize: 45,
                     fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                "You time amount : ${time}s",
+                style: TextStyle(
+                    color: secondColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400),
               ),
               const SizedBox(
                 height: 60,
@@ -55,8 +65,8 @@ class ResultScreen extends StatelessWidget {
                     builder: (context) => HomeScreen(),
                   ));
                 },
-                color: Colors.orange,
-                textColor: Colors.white,
+                color: secondColor,
+                textColor: mainColor,
                 child: const Text("Repeat the Quiz"),
               )
             ]),
