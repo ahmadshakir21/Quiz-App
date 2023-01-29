@@ -1,6 +1,6 @@
 # Quiz App
 
- * This app was developed by Flutter framework, it is a question and answer app.
+ * This app was developed by the Flutter , it is a question-and-answer app.
 
 ## App Screen
 
